@@ -41,16 +41,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity
                 .csrf()
                 .disable()
-                .formLogin().permitAll()
-                .defaultSuccessUrl("/article.html", true)
+                .httpBasic()
                 .and()
-
-                .logout().permitAll()
+                .authorizeRequests()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
+                ///TODO: навести тут порядок
                 .antMatchers("/article/add").hasRole("USER")
                 .antMatchers("/article/rename").hasRole("USER")
                 .antMatchers("/article/deleteByName").hasRole("USER")
@@ -77,8 +76,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/operation/getMostPopularArticleOfThePeriod").permitAll()
                 .antMatchers("/article.html/**").permitAll()
                 .antMatchers("/js/article.js/**").permitAll()
-                .anyRequest()
-                .authenticated()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin().permitAll()
+                .and()
+                .logout().permitAll()
                 .and()
                 .apply(new JWTSecurityConfigurer(jwtTokenProvider));
     }
@@ -89,11 +91,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(clientService).passwordEncoder(passwordEncoder);
     }
 
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//       auth.inMemoryAuthentication()
-//               .withUser("user").password("{noop}pwd").roles("USER")
-//               .and()
-//               .withUser("admin").password("{noop}apwd").roles("ADMIN");
-//    }
 }

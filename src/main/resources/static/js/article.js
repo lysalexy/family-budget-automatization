@@ -1,4 +1,4 @@
-urladd = 'http://localhost:8080/article/add/name=';
+urladd = 'http://localhost:8080/article/add';
 urldel = 'http://localhost:8080/article/deleteByName/name=';
 urlget = 'http://localhost:8080/article/getByName/name=';
 urlgetAll = 'http://localhost:8080/article';
@@ -15,6 +15,7 @@ function createNode(element) {
 function append(parent, el) {
     return parent.appendChild(el);
 }
+
 function clear() {
     for (; table.getElementsByTagName('tr').length > 1;) {
         table.deleteRow(1);
@@ -31,6 +32,7 @@ function get(url) {
     myPromise
         .then(data => data.json())
         .then(function (data) {
+            console.log(data);
             console.log(data.length);
             for (let i = 0; i < data.length; i++) {
 
@@ -61,16 +63,17 @@ function get(url) {
 
 add_btn.onclick = function () {
 
-     let new_article_url = urladd + name_input.value;
-    console.log(new_article_url);
+    let new_article = {
+        "name":name_input.value
+    };
 
-    console.log("url готов");
+    console.log(new_article);
 
-    const sendPromise = fetch(new_article_url, {
+    const sendPromise = fetch(urladd, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'}
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(new_article)
     });
-
 
     sendPromise
         .then(data => data.json())
@@ -89,7 +92,5 @@ add_btn.onclick = function () {
 
 }
 
-
-console.log("wsfmkd");
 clear();
 get(urlgetAll);

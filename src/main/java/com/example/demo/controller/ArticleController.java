@@ -20,17 +20,18 @@ public class ArticleController {
         return artServ.getListOfAvailableArticles();
     }
 
+//    @PostMapping("/article/add")
+//    Article addArticle( @RequestParam("name")String name){
+//        return  artServ.createNewArticle(name);
+//        ///return "Article was added to DB";
+//    }
+
     @PostMapping("/article/add")
-    String addArticle( @RequestParam("name")String name){
-        artServ.createNewArticle(name);
-        return "Article was added to DB";
+    Article addArticle(@RequestBody Article article){
+        return artServ.createNewArticle(article.getName());
+        //return "Article was added to DB";
     }
 
-//    @PostMapping("/article/add")
-//    String addArticle(@RequestBody ArticleWeb artWeb){
-//        artServ.createNewArticle(artWeb.getName());
-//        return "Article was added to DB";
-//    }
 
     @PutMapping("/article/rename")
     String renameArticle( @RequestParam ("oldName")String oldName,
