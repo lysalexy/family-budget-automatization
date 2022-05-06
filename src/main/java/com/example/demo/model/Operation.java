@@ -9,7 +9,7 @@ public class Operation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
-    private Integer ID;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name="article_id", referencedColumnName = "id")
@@ -28,7 +28,7 @@ public class Operation {
     @Override
     public String toString() {
         return "Operation{" +
-                "ID=" + ID +
+                "ID=" + id +
                 ", article=" + article +
                 ", debit=" + debit +
                 ", credit=" + credit +

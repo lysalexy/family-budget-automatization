@@ -25,8 +25,8 @@ public interface OperationRepository extends CrudRepository<Operation, Integer> 
             "FROM Operation op " +
             "WHERE op.createDate BETWEEN :begin AND :end " +
             "AND op.article.isValid = TRUE AND op.balance.isValid = TRUE "+
-            "GROUP BY op.balance.ID " +
-            "ORDER BY COUNT(op.balance.ID) DESC")
+            "GROUP BY op.balance.id " +
+            "ORDER BY COUNT(op.balance.id) DESC")
     List<Balance> getBalancesRankedDescByTheirPopularityForThePeriod(@Param("begin")Date begin, @Param("end")Date end);
 
     @Query("SELECT new java.lang.Double(SUM(op.debit)) FROM Operation op " +
@@ -59,7 +59,7 @@ public interface OperationRepository extends CrudRepository<Operation, Integer> 
             "AND op.balance.isValid = TRUE")
     List<Operation> findAllByArticle(@Param("articleName")String artName);
 
-    @Query("SELECT op FROM Operation op WHERE op.balance.ID = :balance_id " +
+    @Query("SELECT op FROM Operation op WHERE op.balance.id = :balance_id " +
             "AND op.article.isValid = TRUE AND op.balance.isValid = TRUE " +
             "AND op.createDate BETWEEN :begin AND :end")
     List<Operation> findAllByBalanceAndCreateDateBetween(@Param("balance_id")Integer bal, @Param("begin") Date begin, @Param("end")Date end);

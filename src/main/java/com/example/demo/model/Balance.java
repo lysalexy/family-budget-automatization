@@ -9,7 +9,7 @@ public class Balance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column (name = "id")
-    private Integer ID;
+    private Integer id;
 
     @Column(name = "create_date")
     private Date createDate;
@@ -39,7 +39,7 @@ public class Balance {
     @Override
     public String toString() {
         return "Balance{" +
-                "ID=" + ID +
+                "ID=" + id +
                 ", createDate=" + createDate +
                 ", debit=" + debit +
                 ", credit=" + credit +

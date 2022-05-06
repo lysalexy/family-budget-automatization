@@ -22,7 +22,7 @@ public interface ArticleRepository extends CrudRepository<Article,Integer>
         " WHERE art.name = :name")
     void setIsValidToFalse(@Param("name") String name);
 
-    Optional<Article> findByIDAndIsValidTrue(Integer id);
+    Optional<Article> findByIdAndIsValidTrue(Integer id);
 
     Optional<Article> findByNameAndIsValidTrue(String name);
     List<Article> findAllByIsValidTrue();

@@ -11,7 +11,7 @@ public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column (name = "id")
-    private Integer ID;
+    private Integer id;
 
     @Column(name = "name")
     private String name;
@@ -43,17 +43,17 @@ public class Article {
     }
 
     public Integer getID() {
-        return ID;
+        return id;
     }
 
     public void setID(Integer ID) {
-        this.ID = ID;
+        this.id = ID;
     }
 
     @Override
     public String toString() {
         return "Article{" +
-                "ID=" + ID +
+                "ID=" + id +
                 ", name='" + name + '\'' +
                 ", isValid=" + isValid +
                 '}';

@@ -31,8 +31,8 @@ public class OperationServiceImpl implements OperationService {
 
     @Override
     public Operation createNewOperation(Integer article_id, Double debit, Double credit, Date create_date, Integer balance_id) throws NoEntityException {
-        Article art = artRep.findByIDAndIsValidTrue(article_id).orElseThrow(()->new NoEntityException(article_id));
-        Balance bal = balRep.findByIDAndIsValidTrue(balance_id).orElseThrow(()->new NoEntityException(balance_id));
+        Article art = artRep.findByIdAndIsValidTrue(article_id).orElseThrow(()->new NoEntityException(article_id));
+        Balance bal = balRep.findByIdAndIsValidTrue(balance_id).orElseThrow(()->new NoEntityException(balance_id));
         Operation newOp = new Operation(art, debit,credit,create_date,bal);
 
         balRep.updateBalanceDebitAndCredit(balance_id,debit,credit);

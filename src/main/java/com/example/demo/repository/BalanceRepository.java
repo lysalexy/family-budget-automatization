@@ -19,21 +19,21 @@ public interface BalanceRepository extends CrudRepository<Balance, Integer> {
     @Query("UPDATE Balance bal " +
             "SET bal.credit= bal.credit- :credit, bal.debit=bal.debit - :debit, " +
             "bal.amount = bal.debit-bal.credit " +
-            "WHERE bal.ID = :balance_id")
+            "WHERE bal.id = :balance_id")
     void updateBalanceDebitAndCredit(@Param("balance_id")Integer balanceID, @Param("debit") Double debit, @Param("credit") Double credit);
 
     @Modifying
-    @Query("UPDATE Balance bal SET bal.isValid= false WHERE bal.ID = :id")
+    @Query("UPDATE Balance bal SET bal.isValid= false WHERE bal.id = :id")
     void setIsValidToFalse(@Param("id") Integer id);
 
-    @Query("SELECT bal.amount FROM Balance bal WHERE bal.ID= :id")
+    @Query("SELECT bal.amount FROM Balance bal WHERE bal.id= :id")
     Double getAmountByID( @Param("id")Integer id);
 
     Balance findFirstByIsValidTrueOrderByCreditDesc();
     Balance findFirstByIsValidTrueOrderByDebitDesc();
     List<Balance> findAllByIsValidTrue();
 
-    Optional<Balance> findByIDAndIsValidTrue(Integer ID);
+    Optional<Balance> findByIdAndIsValidTrue(Integer ID);
     List<Balance> findAll();
     List<Balance> findAllByIsValidTrueOrderByCreateDate();
 }
