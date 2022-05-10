@@ -14,7 +14,7 @@ import java.util.Optional;
 public interface ArticleRepository extends CrudRepository<Article,Integer>
 {
     @Modifying
-    @Query("UPDATE Article art SET art.name= :newName WHERE art.name = :oldName")
+    @Query("UPDATE Article art SET art.name= :newName WHERE art.name = :oldName ")
     void renameArticle(@Param("newName") String newName, @Param("oldName") String oldName);
 
     @Modifying
@@ -22,8 +22,16 @@ public interface ArticleRepository extends CrudRepository<Article,Integer>
         " WHERE art.name = :name")
     void setIsValidToFalse(@Param("name") String name);
 
+
+    @Modifying
+    @Query("UPDATE Article art SET art.isValid= true " +
+            " WHERE art.name = :name")
+    void setIsValidToTrue(@Param("name") String name);
+
     Optional<Article> findByIdAndIsValidTrue(Integer id);
 
+    Optional<Article> findByName(String name);
     Optional<Article> findByNameAndIsValidTrue(String name);
+    Optional<Article> findByNameAndIsValidFalse(String name);
     List<Article> findAllByIsValidTrue();
 }

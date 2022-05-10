@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
+import com.example.demo.exception.AlreadyExists;
 import com.example.demo.exception.InvalidPasswordException;
-import com.example.demo.exception.UserAlreadyExists;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.security.JWT.JWTTokenProvider;
 import com.example.demo.service.CustomUserDetailsService;
@@ -66,7 +66,7 @@ public class AuthController {
 
          return "New user was successfully added";
       }
-      catch (UserAlreadyExists e)
+      catch (AlreadyExists e)
       {
          throw new ResponseStatusException(HttpStatus.NOT_MODIFIED,"User with with name already exist",e);
       }

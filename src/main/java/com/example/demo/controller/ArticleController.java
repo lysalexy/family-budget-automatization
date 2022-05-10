@@ -1,12 +1,18 @@
 package com.example.demo.controller;
 
+import com.example.demo.exception.AlreadyExists;
 import com.example.demo.exception.NoEntityException;
 import com.example.demo.model.Article;
 import com.example.demo.service.ArticleService;
-import com.example.demo.web.ArticleWeb;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.List;
 
 @RestController
@@ -20,16 +26,16 @@ public class ArticleController {
         return artServ.getListOfAvailableArticles();
     }
 
-//    @PostMapping("/article/add")
-//    Article addArticle( @RequestParam("name")String name){
-//        return  artServ.createNewArticle(name);
-//        ///return "Article was added to DB";
-//    }
 
     @PostMapping("/article/add")
     Article addArticle(@RequestBody Article article){
+        try{
         return artServ.createNewArticle(article.getName());
-        //return "Article was added to DB";
+        }
+        catch (AlreadyExists e)
+        {
+            throw new ResponseStatusException(HttpStatus.NOT_MODIFIED,"Article with with name already exist",e);
+        }
     }
 
 
@@ -42,13 +48,13 @@ public class ArticleController {
     }
 
     @GetMapping("/article/getByName")
-    String findArticleByName(@RequestParam ("name")String name)
+    Article findArticleByName(@RequestParam ("name")String name)
     {
         try{
-            return artServ.findArticleByName(name).toString();}
+            return artServ.findArticleByName(name) ;}
         catch (NoEntityException e)
         {
-            return e.toString();
+            throw new ResponseStatusException(HttpStatus.NOT_MODIFIED,"Article with this name does not exist",e);
         }
     }
 
@@ -63,9 +69,9 @@ public class ArticleController {
 //        }
 //    }
     @PutMapping("/article/deleteByName")
-    String deleteArticleByName(@RequestParam ("name")String name)
+    void deleteArticleByName(@RequestParam ("name")String name)
     {
         artServ.deleteArticle(name);
-        return "Article was deleted";
+        /// return "Article was deleted";
     }
 }
