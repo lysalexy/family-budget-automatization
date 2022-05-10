@@ -7,13 +7,11 @@ urlgetAll = 'http://localhost:8080/article';
 const table = document.getElementById('article');
 const add_btn = document.getElementById('add-btn-article');
 const get_by_name_btn = document.getElementById('get-btn-article');
-const rename_btn = document.getElementById('rename-box-article');
 
 // for adding
 const name_input = document.getElementById('name_article');
 const name_art_input = document.getElementById('get_name_article');
-const old_input = document.getElementById('old_name_article');
-const new_input = document.getElementById('new_name_article');
+const new_input_art = document.getElementById('new_name_art');
 
 function createNode(element) {
     return document.createElement(element);
@@ -28,6 +26,8 @@ function clear() {
         table.deleteRow(1);
     }
     name_input.value = '';
+    name_art_input.value = '';
+    new_input_art.value = '';
 }
 
 function get(url) {
@@ -45,12 +45,9 @@ function get(url) {
 
                 let li = createNode('tr');
                 let name = createNode('td');
-                let newName = createNode('input');
-                newName.className = 'form-control';
-                newName.value = new_input.value;
                 let id = createNode('id');
                 let delete_btn = createNode('button');
-                let renamet_btn = createNode('button');
+                let rename_btn = createNode('button');
 
                 name.innerHTML = `${data[i].name}`;
                 id.innerHTML = `${data[i].id}`;
@@ -59,23 +56,22 @@ function get(url) {
                 delete_btn.name = 'delete-btn-' + data[i].name;
                 delete_btn.className = "btn btn-primary";
 
-                renamet_btn.innerHTML = '-';
-                renamet_btn.className = "btn btn-primary";
+                rename_btn.innerHTML = 'Переименовать эту статью';
+                rename_btn.className = "btn btn-primary";
 
-                renamet_btn.onclick = function () {
 
-                    // let NewName = createNode('input');
-                    //
-                    // NewName.className = 'form-control';
-                    //
-                    // NewName.value = `${data[i].name}`;
+                rename_btn.onclick = function () {
+
+                    let NewName = createNode('input');
+                    NewName.className = 'form-control';
+                    NewName.value = new_input_art.value;
 
                     let send_btn = createNode('button');
                     send_btn.innerHTML = '+';
                     send_btn.name = `${data[i].name}`;
                     send_btn.className = "btn btn-primary";
 
-                    let newurlrename = urlrename + 'oldName=' + send_btn.name + '&newName=' + new_input.value;
+                    let newurlrename = urlrename + 'oldName=' + send_btn.name + '&newName=' +new_input_art.value;
 
                     console.log(newurlrename);
 
@@ -86,9 +82,8 @@ function get(url) {
 
                     sendPromise
                         .then(data => data.json())
-                        .then(function (data) {
+                        .then(function () {
                             console.log('Имя статьи бюджета успешно изменено');
-                            console.log(data);
                             clear();
                             get(urlgetAll);
                         })
@@ -98,7 +93,6 @@ function get(url) {
                             clear();
                             get(urlgetAll);
                         });
-
                 }
 
                 delete_btn.onclick = onDelete;
@@ -108,7 +102,7 @@ function get(url) {
                 append(li, td_btn_delete);
                 append(li, id);
                 append(li, name);
-                append(li, renamet_btn);
+                append(li, rename_btn);
                 append(table, li);
             }
         })
@@ -210,34 +204,6 @@ get_by_name_btn.onclick = function () {
     console.log(urlGetByName);
 
     getOne(encodeURI(urlGetByName));
-}
-
-
-rename_btn.onclick = function () {
-
-    let newurlrename = urlrename + 'oldName=' + old_input.value + '&newName=' + new_input.value;
-
-    console.log(newurlrename);
-
-    const sendPromise = fetch(newurlrename, {
-        method: 'PUT',
-        headers: {'Content-Type': 'application/json'}
-    });
-
-    sendPromise
-        .then(data => data.json())
-        .then(function (data) {
-            console.log('Имя статьи бюджета успешно изменено');
-            console.log(data);
-            clear();
-            get(urlgetAll);
-        })
-        .catch(function (e) {
-            console.log(e);
-            console.log('Имя статьи бюджета НЕ изменено');
-            clear();
-            get(urlgetAll);
-        });
 }
 
 clear();

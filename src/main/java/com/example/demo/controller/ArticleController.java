@@ -58,16 +58,6 @@ public class ArticleController {
         }
     }
 
-//    @GetMapping("/article/getByName")
-//    String findArticleByName(@RequestBody ArticleWeb artWeb)
-//    {
-//        try{
-//            return artServ.findArticleByName(artWeb.getName()).toString();}
-//        catch (NoEntityException e)
-//        {
-//            return e.toString();
-//        }
-//    }
     @PutMapping("/article/deleteByName")
     void deleteArticleByName(@RequestParam ("name")String name)
     {
