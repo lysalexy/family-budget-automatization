@@ -1,5 +1,8 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -21,21 +24,10 @@ public class Operation {
     @Column(name="credit")
     private Double credit;
 
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name="create_date")
     private Date createDate;
-
-//    @Override
-//    public String toString() {
-//        return "Operation{" +
-//                "ID=" + id +
-//                ", article=" + article +
-//                ", debit=" + debit +
-//                ", credit=" + credit +
-//                ", createDate=" + createDate +
-//                ", balance=" + balance +
-//                '}';
-//    }
 
     @ManyToOne
     @JoinColumn(name="balance_id", referencedColumnName = "id")

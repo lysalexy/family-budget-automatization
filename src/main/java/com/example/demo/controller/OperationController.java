@@ -2,6 +2,9 @@ package com.example.demo.controller;
 
 import com.example.demo.exception.InvalidOperationException;
 import com.example.demo.exception.NoEntityException;
+import com.example.demo.model.Article;
+import com.example.demo.model.Balance;
+import com.example.demo.model.Operation;
 import com.example.demo.service.OperationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
+import java.util.List;
 
 @RestController
 public class OperationController {
@@ -20,95 +24,82 @@ public class OperationController {
     @PostMapping("/operation/add")
     String addOperation(@RequestParam("articleID") Integer article_id,
                         @RequestParam("debit") Double debit,
-                        @RequestParam("credit")Double credit,
+                        @RequestParam("credit") Double credit,
                         @RequestParam("createDate")
                         @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date create_date,
-                        @RequestParam("balanceID") Integer balance_id){
+                        @RequestParam("balanceID") Integer balance_id) {
         try {
-            if ((debit>=0)&&(credit<=0)||((debit<=0)&&(credit>=0)))
-            {
+            if ((debit >= 0) && (credit <= 0) || ((debit <= 0) && (credit >= 0))) {
                 opServ.createNewOperation(article_id, debit, credit, create_date, balance_id);
                 return "Operation was added to DB";
-            }
-            else
-            {
+            } else {
                 throw new InvalidOperationException("Operation can't be with both debit and credit");
             }
-        }
-        catch (NoEntityException |InvalidOperationException e)
-        {
+        } catch (NoEntityException | InvalidOperationException e) {
             return e.toString();
         }
     }
 
     @GetMapping("/operation/getAllByCurrentArticle")
-    String getAllOperationsByCurrentArticle(@RequestParam("articleName") String articleName)
-    {
-        return opServ.getAllOperationsByCurrentArticle(articleName).toString();
+    List<Operation> getAllOperationsByCurrentArticle(@RequestParam("articleName") String articleName) {
+        return opServ.getAllOperationsByCurrentArticle(articleName);
     }
 
-    @GetMapping ("/operation/getAllByCurrentBalanceForThePeriod")
-    String getAllOperationsByCurrentBalanceForThePeriod (@RequestParam ("balanceID") Integer balance_id,
-                                                         @RequestParam ("begin")
-                                                         @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date begin,
-                                                         @RequestParam("end")
-                                                         @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date end)
-    {
-        return opServ.getAllOperationsByCurrentBalanceForThePeriod(balance_id, begin, end).toString();
+    @GetMapping("/operation/getAllByCurrentBalanceForThePeriod")
+    List<Operation> getAllOperationsByCurrentBalanceForThePeriod(@RequestParam("balanceID") Integer balance_id,
+                                                                 @RequestParam("begin")
+                                                                 @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date begin,
+                                                                 @RequestParam("end")
+                                                                 @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date end) {
+        return opServ.getAllOperationsByCurrentBalanceForThePeriod(balance_id, begin, end);
     }
 
-    @GetMapping ("/operation/getAllForThePeriod")
-    String getAllOperationsForThePeriod (@RequestParam ("begin")
-                                         @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date begin,
-                                         @RequestParam("end")
-                                         @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date end)
-    {
-        return opServ.getAllOperationsForThePeriod(begin, end).toString();
+    @GetMapping("/operation/getAllForThePeriod")
+    List<Operation> getAllOperationsForThePeriod(@RequestParam("begin")
+                                                 @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date begin,
+                                                 @RequestParam("end")
+                                                 @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date end) {
+        return opServ.getAllOperationsForThePeriod(begin, end);
     }
 
-    @GetMapping ("/operation/rankArticlesOfDebitForThePeriod")
-    String rankArticlesOfDebitForThePeriod (@RequestParam ("begin")
-                                            @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date begin,
-                                            @RequestParam("end")
-                                            @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date end)
-    {
-        return opServ.rankArticlesOfDebitForThePeriod(begin, end).toString();
+    @GetMapping("/operation/rankArticlesOfDebitForThePeriod")
+    List<Article> rankArticlesOfDebitForThePeriod(@RequestParam("begin")
+                                                  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date begin,
+                                                  @RequestParam("end")
+                                                  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date end) {
+        return opServ.rankArticlesOfDebitForThePeriod(begin, end);
     }
 
-    @GetMapping ("/operation/rankArticlesOfCreditForThePeriod")
-    String rankArticlesOfCreditForThePeriod (@RequestParam ("begin")
-                                             @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date begin,
-                                             @RequestParam("end")
-                                             @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date end)
-    {
-        return opServ.rankArticlesOfCreditForThePeriod(begin, end).toString();
+    @GetMapping("/operation/rankArticlesOfCreditForThePeriod")
+    List<Article> rankArticlesOfCreditForThePeriod(@RequestParam("begin")
+                                                   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date begin,
+                                                   @RequestParam("end")
+                                                   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date end) {
+        return opServ.rankArticlesOfCreditForThePeriod(begin, end);
     }
 
     @GetMapping("/operation/getSummaryDebitByArticleNameForThePeriod")
-    String getSummaryDebitOfThisArticleForThePeriod(@RequestParam ("articleName") String name,
-                                                    @RequestParam ("begin")
+    Double getSummaryDebitOfThisArticleForThePeriod(@RequestParam("articleName") String name,
+                                                    @RequestParam("begin")
                                                     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date begin,
                                                     @RequestParam("end")
-                                                    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date end)
-    {
-        return opServ.getSummaryDebitOfThisArticleForThePeriod(name, begin, end).toString();
+                                                    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date end) {
+        return opServ.getSummaryDebitOfThisArticleForThePeriod(name, begin, end);
     }
 
     @GetMapping("/operation/getMostPopularBalanceOfThePeriod")
-    String getMostPopularBalanceOfThePeriod (@RequestParam ("begin")
+    Balance getMostPopularBalanceOfThePeriod(@RequestParam("begin")
                                              @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date begin,
                                              @RequestParam("end")
-                                             @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date end)
-    {
-        return opServ.getMostPopularBalanceOfThePeriod(begin, end).toString();
+                                             @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date end) {
+        return opServ.getMostPopularBalanceOfThePeriod(begin, end);
     }
 
     @GetMapping("/operation/getMostPopularArticleOfThePeriod")
-    String getMostPopularArticleOfThePeriod(@RequestParam ("begin")
+    Article getMostPopularArticleOfThePeriod(@RequestParam("begin")
                                             @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date begin,
                                             @RequestParam("end")
-                                            @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date end)
-    {
-        return opServ.getMostPopularArticleOfThePeriod(begin, end).toString();
+                                            @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date end) {
+        return opServ.getMostPopularArticleOfThePeriod(begin, end);
     }
 }

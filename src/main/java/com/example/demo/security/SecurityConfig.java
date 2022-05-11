@@ -77,6 +77,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/operation/getMostPopularArticleOfThePeriod").permitAll()
                 .antMatchers("/article.html/**").permitAll()
                 .antMatchers("/balance.html/**").permitAll()
+                .antMatchers("/operation.html/**").permitAll()
                 .antMatchers("/js/article.js/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
