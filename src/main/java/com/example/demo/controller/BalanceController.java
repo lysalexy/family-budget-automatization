@@ -1,11 +1,15 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Article;
+import com.example.demo.model.Balance;
 import com.example.demo.service.BalanceService;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 @RestController
 public class BalanceController {
@@ -18,49 +22,53 @@ public class BalanceController {
                       @RequestParam("debit") Double debit,
                       @RequestParam("credit")Double credit)
     {
+        if ((debit>=0)&&(credit>=0)){
         balServ.createNewBalance(createDate, debit, credit);
         return "Balance was created";
+        }
+        return "Debit and credit should be positive numbers";
     }
 
     @GetMapping("/balance/getAll")
-    String getAllBalances()
+    List<Balance> getAllBalances()
     {
-        return balServ.getAll().toString();
+        return balServ.getAll();
     }
 
     @GetMapping("/balance/getAvailable")
-    String getAvailableBalances()
+    List<Balance> getAvailableBalances()
     {
-        return balServ.getListOfAvailableBalances().toString();
+        return balServ.getListOfAvailableBalances();
     }
 
     @GetMapping("/balance/getMostProfitable")
-    String getMostProfitableBalance()
+    Balance getMostProfitableBalance()
     {
-        return balServ.getMostProfitableBalance().toString();
+        return balServ.getMostProfitableBalance();
     }
 
     @GetMapping("/balance/getMostSpending")
-    String getMostSpendingBalance()
+    Balance getMostSpendingBalance()
     {
-        return balServ.getMostSpendingBalance().toString();
+        return balServ.getMostSpendingBalance();
     }
 
     @GetMapping("/balance/getAmountByID")
-    String getAmountByBalanceID(@RequestParam("ID") Integer id)
+    Double getAmountByBalanceID(@RequestParam("ID") Integer id)
     {
-        return balServ.getAmountByID(id).toString();
+
+        return balServ.getAmountByID(id);
     }
 
     @GetMapping("/balance/getSummaryAmount")
-    String getSummaryAmount()
+    Double getSummaryAmount()
     {
-        return balServ.getSummaryAmountOfMoneyInAllBalances().toString();
+        return balServ.getSummaryAmountOfMoneyInAllBalances();
     }
 
     @GetMapping("/balance/rankByCreateDate")
-    String rankByCreateDate() {
-        return balServ.rankBalanceByCreateDate().toString();
+    List<Balance> rankByCreateDate() {
+        return balServ.rankBalanceByCreateDate();
     }
 
     @PutMapping("/balance/deleteByID")

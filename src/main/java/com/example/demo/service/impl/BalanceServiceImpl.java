@@ -33,12 +33,12 @@ public class BalanceServiceImpl implements BalanceService {
 
     @Override
     public Balance getMostProfitableBalance() {
-        return balRep.findFirstByIsValidTrueOrderByCreditDesc();
+        return balRep.findFirstByIsValidTrueOrderByDebitDesc();
     }
 
     @Override
     public Balance getMostSpendingBalance() {
-        return balRep.findFirstByIsValidTrueOrderByDebitDesc();
+        return balRep.findFirstByIsValidTrueOrderByCreditDesc();
     }
 
     @Override

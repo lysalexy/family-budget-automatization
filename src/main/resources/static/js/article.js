@@ -57,7 +57,7 @@ function get(url, isList) {
                 let rename_btn = createNode('button');
 
                 let nameV;
-                let idV
+                let idV;
 
                 if (isList) {
                     nameV = `${data[i].name}`;
@@ -175,12 +175,6 @@ add_btn.onclick = function () {
             clear();
             get(urlgetAll, 1);
         });
-}
-
-get_by_name_btn.onclick = function () {
-    let urlGetByName = urlget + name_art_input.value;
-    console.log(urlGetByName);
-    get(encodeURI(urlGetByName));
 }
 
 del_btn.onclick = function () {

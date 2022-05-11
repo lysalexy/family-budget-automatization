@@ -25,17 +25,17 @@ public class Operation {
     @Column(name="create_date")
     private Date createDate;
 
-    @Override
-    public String toString() {
-        return "Operation{" +
-                "ID=" + id +
-                ", article=" + article +
-                ", debit=" + debit +
-                ", credit=" + credit +
-                ", createDate=" + createDate +
-                ", balance=" + balance +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Operation{" +
+//                "ID=" + id +
+//                ", article=" + article +
+//                ", debit=" + debit +
+//                ", credit=" + credit +
+//                ", createDate=" + createDate +
+//                ", balance=" + balance +
+//                '}';
+//    }
 
     @ManyToOne
     @JoinColumn(name="balance_id", referencedColumnName = "id")
@@ -50,5 +50,45 @@ public class Operation {
     }
 
     public Operation() {
+    }
+
+    public Double getDebit() {
+        return debit;
+    }
+
+    public void setDebit(Double debit) {
+        this.debit = debit;
+    }
+
+    public Double getCredit() {
+        return credit;
+    }
+
+    public void setCredit(Double credit) {
+        this.credit = credit;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Balance getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Balance balance) {
+        this.balance = balance;
+    }
+
+    public Article getArticle() {
+        return article;
+    }
+
+    public void setArticle(Article article) {
+        this.article = article;
     }
 }

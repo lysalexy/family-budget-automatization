@@ -49,14 +49,5 @@ public class Article {
     public void setID(Integer ID) {
         this.id = ID;
     }
-
-    @Override
-    public String toString() {
-        return "Article{" +
-                "ID=" + id +
-                ", name='" + name + '\'' +
-                ", isValid=" + isValid +
-                '}';
-    }
 }
 
