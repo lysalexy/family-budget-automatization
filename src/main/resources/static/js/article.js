@@ -176,6 +176,11 @@ add_btn.onclick = function () {
             get(urlgetAll, 1);
         });
 }
+get_by_name_btn.onclick = function () {
+    let urlGetByName = urlget + name_art_input.value;
+    console.log(urlGetByName);
+    get(encodeURI(urlGetByName));
+}
 
 del_btn.onclick = function () {
     get(urlgetDel, 1);
