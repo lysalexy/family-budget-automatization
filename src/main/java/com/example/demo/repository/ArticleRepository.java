@@ -34,4 +34,5 @@ public interface ArticleRepository extends CrudRepository<Article,Integer>
     Optional<Article> findByNameAndIsValidTrue(String name);
     Optional<Article> findByNameAndIsValidFalse(String name);
     List<Article> findAllByIsValidTrue();
+    List<Article> findAllByIsValidFalse();
 }

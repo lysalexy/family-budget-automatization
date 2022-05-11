@@ -61,4 +61,9 @@ public class ArticleServiceImpl implements ArticleService {
     public List<Article> getListOfAvailableArticles() {
         return artRep.findAllByIsValidTrue();
     }
+
+    @Override
+    public List<Article> getListOfUnavailableArticles() {
+        return artRep.findAllByIsValidFalse();
+    }
 }

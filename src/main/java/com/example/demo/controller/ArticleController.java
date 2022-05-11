@@ -26,6 +26,12 @@ public class ArticleController {
         return artServ.getListOfAvailableArticles();
     }
 
+    @GetMapping("/article/deleted")
+    List<Article> getUnavailableArticles ()
+    {
+        return artServ.getListOfUnavailableArticles();
+    }
+
 
     @PostMapping("/article/add")
     Article addArticle(@RequestBody Article article){

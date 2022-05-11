@@ -12,4 +12,5 @@ public interface ArticleService {
     void deleteArticle (String name);
 
     List<Article> getListOfAvailableArticles();
+    List<Article> getListOfUnavailableArticles();
 }

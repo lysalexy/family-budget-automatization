@@ -56,6 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/balance/add").hasRole("USER")
                 .antMatchers("/balance/deleteByID").hasRole("USER")
                 .antMatchers("/operation/add").hasRole("USER")
+                .antMatchers("/article/deleted").permitAll()
                 .antMatchers("/signin").permitAll()
                 .antMatchers("/newUser").permitAll()
                 .antMatchers("/article").permitAll()
