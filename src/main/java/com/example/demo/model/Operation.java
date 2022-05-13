@@ -72,6 +72,14 @@ public class Operation {
         return balance;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public void setBalance(Balance balance) {
         this.balance = balance;
     }

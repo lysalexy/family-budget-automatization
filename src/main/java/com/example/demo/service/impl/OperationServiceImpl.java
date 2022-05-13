@@ -40,6 +40,11 @@ public class OperationServiceImpl implements OperationService {
     }
 
     @Override
+    public List<Operation> getAllOperations() {
+        return opRep.findAll();
+    }
+
+    @Override
     public List<Operation> getAllOperationsByCurrentArticle(String articleName) {
         return opRep.findAllByArticle(articleName);
     }
@@ -74,8 +79,8 @@ public class OperationServiceImpl implements OperationService {
         return opRep.getBalancesRankedDescByTheirPopularityForThePeriod(begin, end).get(0);
     }
 
-    @Override
-    public Double getSummaryDebitOfThisArticleForThePeriod(String name, Date begin, Date end) {
-        return opRep.getSummaryDebitOfArticleForThePeriod(name,begin,end);
-    }
+//    @Override
+//    public Double getSummaryDebitOfThisArticleForThePeriod(String name, Date begin, Date end) {
+//        return opRep.getSummaryDebitOfArticleForThePeriod(name,begin,end);
+//    }
 }

@@ -68,6 +68,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/balance/getSummaryAmount").permitAll()
                 .antMatchers("/balance/rankByCreateDate").permitAll()
                 .antMatchers("/balance/getAvailable").permitAll()
+                .antMatchers("/operation/getAll").permitAll()
                 .antMatchers("/operation/rankArticlesOfDebitForThePeriod").permitAll()
                 .antMatchers("/operation/rankArticlesOfCreditForThePeriod").permitAll()
                 .antMatchers("/operation/getAllByCurrentArticle").permitAll()
