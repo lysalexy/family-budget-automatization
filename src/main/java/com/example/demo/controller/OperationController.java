@@ -78,14 +78,6 @@ public class OperationController {
         return opServ.rankArticlesOfCreditForThePeriod(begin, end);
     }
 
-//    @GetMapping("/operation/getSummaryDebitByArticleNameForThePeriod")
-//    Double getSummaryDebitOfThisArticleForThePeriod(@RequestParam("articleName") String name,
-//                                                    @RequestParam("begin")
-//                                                    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date begin,
-//                                                    @RequestParam("end")
-//                                                    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date end) {
-//        return opServ.getSummaryDebitOfThisArticleForThePeriod(name, begin, end);
-//    }
     @GetMapping("/operation/getAll")
     List<Operation> getAll() {
         return opServ.getAllOperations();

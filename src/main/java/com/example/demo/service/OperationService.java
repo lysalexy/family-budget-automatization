@@ -19,7 +19,6 @@ public interface OperationService {
     List<Article> rankArticlesOfDebitForThePeriod(Date begin, Date end);
     List<Article> rankArticlesOfCreditForThePeriod(Date begin, Date end);
 
-    ////Double getSummaryDebitOfThisArticleForThePeriod(String name, Date begin, Date end);
     Balance getMostPopularBalanceOfThePeriod(Date begin, Date end);
     Article getMostPopularArticleOfThePeriod(Date begin, Date end);
 }

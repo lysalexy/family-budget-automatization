@@ -78,9 +78,4 @@ public class OperationServiceImpl implements OperationService {
     public Balance getMostPopularBalanceOfThePeriod(Date begin, Date end) {
         return opRep.getBalancesRankedDescByTheirPopularityForThePeriod(begin, end).get(0);
     }
-
-//    @Override
-//    public Double getSummaryDebitOfThisArticleForThePeriod(String name, Date begin, Date end) {
-//        return opRep.getSummaryDebitOfArticleForThePeriod(name,begin,end);
-//    }
 }

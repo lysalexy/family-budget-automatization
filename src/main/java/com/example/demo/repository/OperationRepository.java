@@ -31,11 +31,6 @@ public interface OperationRepository extends CrudRepository<Operation, Integer> 
             "ORDER BY COUNT(op.balance.id) DESC")
     List<Balance> getBalancesRankedDescByTheirPopularityForThePeriod(@Param("begin")Date begin, @Param("end")Date end);
 
-//    @Query("SELECT new java.lang.Double(SUM(op.debit)) FROM Operation op " +
-//            "WHERE op.article.name = :name AND op.createDate BETWEEN :begin AND :end " +
-//            "AND op.article.isValid = TRUE AND op.balance.isValid = TRUE")
-//    Double getSummaryDebitOfArticleForThePeriod(@Param("name") String name, @Param("begin") Date begin, @Param("end") Date end);///какой тип
-
     @Query("SELECT op.article " +
             "FROM Operation op " +
             "WHERE op.createDate BETWEEN :begin AND :end " +
