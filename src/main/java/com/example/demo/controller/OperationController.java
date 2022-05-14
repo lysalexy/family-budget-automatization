@@ -29,7 +29,7 @@ public class OperationController {
                         @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date create_date,
                         @RequestParam("balanceID") Integer balance_id) {
         try {
-            if ((debit >= 0) && (credit <= 0) || ((debit <= 0) && (credit >= 0))) {
+            if ((debit > 0) && (credit == 0) || ((debit == 0) && (credit > 0))) {
                 opServ.createNewOperation(article_id, debit, credit, create_date, balance_id);
                 return "Operation was added to DB";
             } else {
