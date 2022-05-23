@@ -17,7 +17,7 @@ public interface BalanceRepository extends CrudRepository<Balance, Integer> {
 
     @Modifying
     @Query("UPDATE Balance bal " +
-            "SET bal.credit= bal.credit- :credit, bal.debit=bal.debit - :debit, " +
+            "SET bal.credit= bal.credit+ :credit, bal.debit=bal.debit + :debit, " +
             "bal.amount = bal.debit-bal.credit " +
             "WHERE bal.id = :balance_id")
     void updateBalanceDebitAndCredit(@Param("balance_id")Integer balanceID, @Param("debit") Double debit, @Param("credit") Double credit);

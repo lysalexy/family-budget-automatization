@@ -68,7 +68,7 @@ public class AuthController {
       }
       catch (AlreadyExists e)
       {
-         throw new ResponseStatusException(HttpStatus.NOT_MODIFIED,"User with with name already exist",e);
+         throw new ResponseStatusException(HttpStatus.NOT_MODIFIED,"User with this name already exist",e);
       }
    }
 }
